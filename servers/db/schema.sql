@@ -18,35 +18,46 @@ create table if not exists SignInLog (
 
 create table if not exists Courses (
     ID int not null auto_increment primary key,
-    CourseName varchar(128) not null,
-    CourseDept varchar(128) not null,
-    ProfessorID int not null
-)
+    Name varchar(128) not null,
+    Department varchar(128) not null,
+    ProfessorID int,
+    FOREIGN KEY (ProfessorID) REFERENCES Professors(ID)
+);
 
-create table if not exists Professor (
+create table if not exists Professors (
   ID int not null auto_increment primary key,
-  ProfessorFirstName varchar(128) not null,
-  ProfessorLastName varchar(128) not null,
-)
+  FirstName varchar(128) not null,
+  LastName varchar(128) not null,
+);
 
 create table if not exists StudentCourse (
   ID int not null auto_increment primary key,
-  StudentID int not null,
-  CourseID int not null, 
-  isCurrentCourse boolean not null,
-  isExpert boolean not null   
-)
+  StudentID int,
+  CourseID int,
+  StartDate DATE not null,
+  EndDate DATE not null,
+  FOREIGN KEY (StudentID) REFERENCES Students(ID),
+  FOREIGN KEY (CourseID) REFERENCES Courses(ID)
+);
+
+create table if not exists CourseExpert (
+    ID int not null auto_increment primary key,
+    CourseID int,
+    ExpertID int,
+    FOREIGN KEY (CourseID) REFERENCES Courses(ID),
+    FOREIGN KEY (ExpertID) REFERENCES Students(ID)
+);
 
 create table if not exists Ratings (
     ID int not null auto_increment primary key,
-    RatingDifficulty int not null,
-    RatingEnjoyment int not null,
-    RatingAvgTimeConsumptionPerWeek int not null,
-    RatingInstructorEngagement int not null
-)
+    Difficulty int not null,
+    Enjoyment int not null,
+    AvgTimeConsumptionPerWeek int not null,
+    InstructorEngagement int not null
+);
 
 create table if not exists RatingCourse (
     ID int not null auto_increment primary key,
     RatingID int not null,
     CourseID int not null
-)
+);
