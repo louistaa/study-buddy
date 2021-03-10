@@ -1,4 +1,4 @@
-package users
+package students
 
 import (
 	"database/sql"
@@ -35,7 +35,7 @@ func NewMySQLStore(dataSourceName string) (*MySQLStore, error) {
 // getByProvidedType gets a specific user given the provided type.
 // This requires the GetByType to be "unique" in the database.
 func (ms *MySQLStore) getByProvidedType(t GetByType, arg interface{}) (*User, error) {
-	sel := string("select ID, Email, PassHash, UserName, FirstName, LastName, PhotoURL from Users where " + t + " = ?")
+	sel := string("select ID, Email, PassHash, UserName, FirstName, LastName, PhotoURL from Students where " + t + " = ?")
 
 	rows, err := ms.Database.Query(sel, arg)
 	if err != nil {
@@ -43,44 +43,44 @@ func (ms *MySQLStore) getByProvidedType(t GetByType, arg interface{}) (*User, er
 	}
 	defer rows.Close()
 
-	user := &User{}
+	student := &Student{}
 
 	// Should never have more than one row, so only grab one
 	rows.Next()
 	if err := rows.Scan(
-		&user.ID,
-		&user.Email,
-		&user.PassHash,
-		&user.UserName,
-		&user.FirstName,
-		&user.LastName,
-		&user.PhotoURL); err != nil {
+		&student.ID,
+		&student.Email,
+		&student.PassHash,
+		&student.UserName,
+		&student.FirstName,
+		&student.LastName,
+		&student.PhotoURL); err != nil {
 		return nil, err
 	}
-	return user, nil
+	return student, nil
 }
 
 //GetByID returns the User with the given ID
-func (ms *MySQLStore) GetByID(id int64) (*User, error) {
+func (ms *MySQLStore) GetByID(id int64) (*Student, error) {
 	return ms.getByProvidedType(ID, id)
 }
 
 //GetByEmail returns the User with the given email
-func (ms *MySQLStore) GetByEmail(email string) (*User, error) {
+func (ms *MySQLStore) GetByEmail(email string) (*Student, error) {
 	return ms.getByProvidedType(Email, email)
 }
 
 //GetByUserName returns the User with the given Username
-func (ms *MySQLStore) GetByUserName(username string) (*User, error) {
+func (ms *MySQLStore) GetByUserName(username string) (*Student, error) {
 	return ms.getByProvidedType(UserName, username)
 }
 
 //Insert inserts the user into the database, and returns
 //the newly-inserted User, complete with the DBMS-assigned ID
-func (ms *MySQLStore) Insert(user *User) (*User, error) {
-	ins := "insert into Users(Email, PassHash, UserName, FirstName, LastName, PhotoURL) values (?,?,?,?,?,?)"
-	res, err := ms.Database.Exec(ins, user.Email, user.PassHash, user.UserName,
-		user.FirstName, user.LastName, user.PhotoURL)
+func (ms *MySQLStore) Insert(student *Student) (*Student, error) {
+	ins := "insert into Students(Email, PassHash, UserName, FirstName, LastName, PhotoURL) values (?,?,?,?,?,?)"
+	res, err := ms.Database.Exec(ins, student.Email, student.PassHash, student.UserName,
+		student.FirstName, student.LastName, student.PhotoURL)
 	if err != nil {
 		return nil, err
 	}
@@ -90,15 +90,15 @@ func (ms *MySQLStore) Insert(user *User) (*User, error) {
 		return nil, lidErr
 	}
 
-	user.ID = lid
-	return user, nil
+	student.ID = lid
+	return student, nil
 }
 
 //Update applies UserUpdates to the given user ID
 //and returns the newly-updated user
-func (ms *MySQLStore) Update(id int64, updates *Updates) (*User, error) {
+func (ms *MySQLStore) Update(id int64, updates *Updates) (*Student, error) {
 	// Assumes updates ALWAYS includes FirstName and LastName
-	upd := "update Users set FirstName = ?, LastName = ? where ID = ?"
+	upd := "update Students set FirstName = ?, LastName = ? where ID = ?"
 	res, err := ms.Database.Exec(upd, updates.FirstName, updates.LastName, id)
 	if err != nil {
 		return nil, err
@@ -119,7 +119,7 @@ func (ms *MySQLStore) Update(id int64, updates *Updates) (*User, error) {
 
 //Delete deletes the user with the given ID
 func (ms *MySQLStore) Delete(id int64) error {
-	del := "delete from Users where ID = ?"
+	del := "delete from Students where ID = ?"
 	res, err := ms.Database.Exec(del, id)
 	if err != nil {
 		return err
@@ -138,8 +138,8 @@ func (ms *MySQLStore) Delete(id int64) error {
 }
 
 //LogSignIn logs successful sign ins
-func (ms *MySQLStore) LogSignIn(user *User, time time.Time, clientIP string) error {
-	ins := "insert into SignInLog(UserID, Time, clientIP) values(?, ?, ?)"
-	_, err := ms.Database.Exec(ins, user.ID, time, clientIP)
+func (ms *MySQLStore) LogSignIn(student *Student, time time.Time, clientIP string) error {
+	ins := "insert into SignInLog(StudentID, Time, clientIP) values(?, ?, ?)"
+	_, err := ms.Database.Exec(ins, student.ID, time, clientIP)
 	return err
 }

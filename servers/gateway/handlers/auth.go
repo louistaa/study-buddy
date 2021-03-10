@@ -7,6 +7,7 @@ import (
 	"path"
 	"strconv"
 	"strings"
+	"study-buddy/servers/gateway/models/students"
 	"time"
 
 	"github.com/louistaa/study-buddy/servers/gateway/models/users"
@@ -21,35 +22,35 @@ func (hc *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Request) {
 			http.Error(w, "request body must be in JSON", http.StatusUnsupportedMediaType)
 			return
 		}
-		newUser := &users.NewUser{}
+		newStudent := &students.NewStudent{}
 		body, _ := ioutil.ReadAll(r.Body)
-		err := json.Unmarshal([]byte(body), newUser)
+		err := json.Unmarshal([]byte(body), newStudent)
 		if err != nil {
 			http.Error(w, "JSON error: "+err.Error(), http.StatusBadRequest)
 			return
 		}
-		err = newUser.Validate()
+		err = newStudent.Validate()
 		if err != nil {
 			http.Error(w, "Invalid User: "+err.Error(), http.StatusBadRequest)
 			return
 		}
-		user, err := newUser.ToUser()
+		student, err := newStudent.ToStudent()
 		if err != nil {
 			http.Error(w, "Error creating user: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
-		insertUser, err := hc.UserStore.Insert(user)
+		insertStudent, err := hc.StudentStore.Insert(student)
 		if err != nil {
-			http.Error(w, "Error inserting to UserStore: "+err.Error(), http.StatusInternalServerError)
+			http.Error(w, "Error inserting to StudentStore: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
 
-		sessionState := &SessionState{StartTime: time.Now(), User: *insertUser}
+		sessionState := &SessionState{StartTime: time.Now(), Student: *insertStudent}
 		_, err = sessions.BeginSession(hc.SigningKey, hc.SessionStore, sessionState, w)
 		w.Header().Set("Content-Type", "application/json")
-		userJSON, _ := json.Marshal(user)
+		studentJSON, _ := json.Marshal(student)
 		w.WriteHeader(http.StatusCreated)
-		w.Write([]byte(userJSON))
+		w.Write([]byte(studentJSON))
 	} else {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}
@@ -70,23 +71,23 @@ func (hc *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Req
 		userID := int64(-1)
 
 		if path.Base(r.URL.Path) == "me" {
-			userID = sessionState.User.ID
+			userID = sessionState.Student.ID
 		} else {
 			userID, _ = strconv.ParseInt(path.Base(r.URL.Path), 10, 64)
 		}
-		user, err := hc.UserStore.GetByID(userID)
+		student, err := hc.StudentStore.GetByID(userID)
 		if err != nil {
 			http.Error(w, "User not found", http.StatusNotFound)
 			return
 		}
 		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
-		userJSON, _ := json.Marshal(user)
-		w.Write([]byte(userJSON))
+		studentJSON, _ := json.Marshal(student)
+		w.Write([]byte(studentJSON))
 	} else if r.Method == "PATCH" {
 		if path.Base(r.URL.Path) != "me" {
 			userID, _ := strconv.ParseInt(path.Base(r.URL.Path), 10, 64)
-			if userID != sessionState.User.ID {
+			if userID != sessionState.Student.ID {
 				http.Error(w, "User not authenticated", http.StatusForbidden)
 				return
 			}
@@ -102,12 +103,12 @@ func (hc *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Req
 			http.Error(w, "Unable to create update from JSON: "+err.Error(), http.StatusBadRequest)
 			return
 		}
-		user, err := hc.UserStore.Update(sessionState.User.ID, updates)
+		user, err := hc.StudentStore.Update(sessionState.Student.ID, updates)
 		if err != nil {
 			http.Error(w, "Couldn't update user: "+err.Error(), http.StatusInternalServerError)
 			return
 		}
-		sessionState.User = *user
+		sessionState.Student = *user
 		err = hc.SessionStore.Save(sessionID, sessionState)
 		if err != nil {
 			http.Error(w, "Couldn't update session: "+err.Error(), http.StatusInternalServerError)
@@ -116,8 +117,8 @@ func (hc *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Req
 
 		w.WriteHeader(http.StatusOK)
 		w.Header().Set("Content-Type", "application/json")
-		userJSON, _ := json.Marshal(user)
-		w.Write([]byte(userJSON))
+		studentJSON, _ := json.Marshal(user)
+		w.Write([]byte(studentJSON))
 	} else {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 		return
@@ -138,7 +139,7 @@ func (hc *HandlerContext) SessionsHandler(w http.ResponseWriter, r *http.Request
 			http.Error(w, "Unable to create credentials from JSON: "+err.Error(), http.StatusBadRequest)
 			return
 		}
-		user, err := hc.UserStore.GetByEmail(credentials.Email)
+		user, err := hc.StudentStore.GetByEmail(credentials.Email)
 		if err != nil {
 			bcrypt.GenerateFromPassword([]byte(credentials.Password), bcrypt.DefaultCost)
 			http.Error(w, "Invalid credentials", http.StatusUnauthorized)
@@ -149,7 +150,7 @@ func (hc *HandlerContext) SessionsHandler(w http.ResponseWriter, r *http.Request
 			http.Error(w, "Invalid credentials", http.StatusUnauthorized)
 			return
 		}
-		sessionState := &SessionState{StartTime: time.Now(), User: *user}
+		sessionState := &SessionState{StartTime: time.Now(), Student: *user}
 		_, err = sessions.BeginSession(hc.SigningKey, hc.SessionStore, sessionState, w)
 		if err != nil {
 			http.Error(w, "Unable to begin session: "+err.Error(), http.StatusInternalServerError)
@@ -160,7 +161,7 @@ func (hc *HandlerContext) SessionsHandler(w http.ResponseWriter, r *http.Request
 			clientIP = r.Header.Get("X-Forwarded-For")
 		}
 
-		err = hc.UserStore.LogSignIn(user, time.Now(), clientIP)
+		err = hc.StudentStore.LogSignIn(user, time.Now(), clientIP)
 		if err != nil {
 			http.Error(w, "Failed to log user sign in: "+err.Error(), http.StatusInternalServerError)
 			return

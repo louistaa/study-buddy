@@ -9,7 +9,6 @@ import (
 	"github.com/go-redis/redis"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/louistaa/study-buddy/servers/gateway/handlers"
-	"github.com/louistaa/study-buddy/servers/gateway/models/users"
 	"github.com/louistaa/study-buddy/servers/gateway/sessions"
 )
 
@@ -32,7 +31,7 @@ func main() {
 
 	sessionStore := sessions.NewRedisStore(redisDB, time.Hour)
 
-	userStore, err := users.NewMySQLStore(DSN)
+	studentStore, err := students.NewMySQLStore(DSN)
 
 	if err != nil {
 		log.Printf("Unable to create userStore")
@@ -41,7 +40,7 @@ func main() {
 	handlerContext := &handlers.HandlerContext{
 		SigningKey:   sessionKey,
 		SessionStore: sessionStore,
-		UserStore:    userStore,
+		StudentStore: studentStore,
 	}
 
 	TLSKEY := os.Getenv("TLSKEY")
@@ -49,11 +48,10 @@ func main() {
 
 	mux := http.NewServeMux()
 	log.Printf("server is listening at %s...", addr)
-	mux.HandleFunc("/v1/summary/", handlers.SummaryHandler)
-	mux.HandleFunc("/v1/users", handlerContext.UsersHandler)
-	mux.HandleFunc("/v1/users/", handlerContext.SpecificUserHandler)
-	mux.HandleFunc("/v1/sessions", handlerContext.SessionsHandler)
-	mux.HandleFunc("/v1/sessions/", handlerContext.SpecificSessionHanlder)
+	mux.HandleFunc("/students", handlerContext.StudentsHandler)
+	mux.HandleFunc("/students/", handlerContext.SpecificStudentHandler)
+	mux.HandleFunc("/sessions", handlerContext.SessionsHandler)
+	mux.HandleFunc("/sessions/", handlerContext.SpecificSessionHanlder)
 
 	corsMux := &handlers.CORS{Handler: mux}
 	log.Fatal(http.ListenAndServeTLS(addr, TLSCERT, TLSKEY, corsMux))

@@ -1,7 +1,8 @@
 package handlers
 
 import (
-	"github.com/louistaa/study-buddy/servers/gateway/models/users"
+	"study-buddy/servers/gateway/models/students"
+
 	"github.com/louistaa/study-buddy/servers/gateway/sessions"
 )
 
@@ -12,5 +13,5 @@ import (
 type HandlerContext struct {
 	SigningKey   string
 	SessionStore sessions.Store
-	UserStore    users.Store
+	StudentStore students.Store
 }
