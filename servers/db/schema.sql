@@ -5,7 +5,8 @@ create table if not exists Students (
     UserName varchar(255) not null unique, 
     FirstName varchar(128) not null,
     LastName varchar(128) not null,
-    PhotoURL varchar(2083) not null
+    PhotoURL varchar(2083) not null,
+    Major varchar(300) not null
 );
 
 create table if not exists SignInLog (
@@ -13,4 +14,39 @@ create table if not exists SignInLog (
     StudentID int not null,
     Time DateTime not null,
     ClientIP varchar(255) not null
+);
+
+create table if not exists Courses (
+    ID int not null auto_increment primary key,
+    CourseName varchar(128) not null,
+    CourseDept varchar(128) not null,
+    ProfessorID int not null
+)
+
+create table if not exists Professor (
+  ID int not null auto_increment primary key,
+  ProfessorFirstName varchar(128) not null,
+  ProfessorLastName varchar(128) not null,
+)
+
+create table if not exists StudentCourse (
+  ID int not null auto_increment primary key,
+  StudentID int not null,
+  CourseID int not null, 
+  isCurrentCourse boolean not null,
+  isExpert boolean not null   
+)
+
+create table if not exists Ratings (
+    ID int not null auto_increment primary key,
+    RatingDifficulty int not null,
+    RatingEnjoyment int not null,
+    RatingAvgTimeConsumptionPerWeek int not null,
+    RatingInstructorEngagement int not null
+)
+
+create table if not exists RatingCourse (
+    ID int not null auto_increment primary key,
+    RatingID int not null,
+    CourseID int not null
 )
