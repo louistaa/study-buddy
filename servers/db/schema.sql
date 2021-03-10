@@ -30,14 +30,21 @@ create table if not exists Professors (
   LastName varchar(128) not null,
 );
 
+create table if not exists Quarters (
+    ID int not null auto_increment primary key,
+    Name varchar(128) not null,
+    StartDate DATE not null,
+    EndDate DATE not null
+)
+
 create table if not exists StudentCourse (
   ID int not null auto_increment primary key,
   StudentID int,
   CourseID int,
-  StartDate DATE not null,
-  EndDate DATE not null,
+  QuarterID int,
   FOREIGN KEY (StudentID) REFERENCES Students(ID),
-  FOREIGN KEY (CourseID) REFERENCES Courses(ID)
+  FOREIGN KEY (CourseID) REFERENCES Courses(ID),
+  FOREIGN KEY (QuarterID) REFERENCES Quarters(ID)
 );
 
 create table if not exists CourseExpert (
