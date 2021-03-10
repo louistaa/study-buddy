@@ -7,16 +7,16 @@ import (
 	"path"
 	"strconv"
 	"strings"
-	"study-buddy/servers/gateway/models/students"
 	"time"
 
-	"github.com/louistaa/study-buddy/servers/gateway/models/users"
+	"github.com/louistaa/study-buddy/servers/gateway/models/students"
 	"github.com/louistaa/study-buddy/servers/gateway/sessions"
+
 	"golang.org/x/crypto/bcrypt"
 )
 
-// UsersHandler handles requests for the "users" resource
-func (hc *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Request) {
+// StudentsHandler handles requests for the "users" resource
+func (hc *HandlerContext) StudentsHandler(w http.ResponseWriter, r *http.Request) {
 	if r.Method == "POST" {
 		if !strings.HasPrefix(r.Header.Get("Content-Type"), "application/json") {
 			http.Error(w, "request body must be in JSON", http.StatusUnsupportedMediaType)
@@ -56,8 +56,8 @@ func (hc *HandlerContext) UsersHandler(w http.ResponseWriter, r *http.Request) {
 	}
 }
 
-// SpecificUserHandler handles requests for a specific users
-func (hc *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Request) {
+// SpecificStudentHandler handles requests for a specific student
+func (hc *HandlerContext) SpecificStudentHandler(w http.ResponseWriter, r *http.Request) {
 	auth := r.Header.Get("Authorization")
 	sessionID := sessions.SessionID(strings.TrimPrefix(auth, "Bearer "))
 	sessionState := &SessionState{}
@@ -96,7 +96,7 @@ func (hc *HandlerContext) SpecificUserHandler(w http.ResponseWriter, r *http.Req
 			http.Error(w, "request body must be in JSON", http.StatusUnsupportedMediaType)
 			return
 		}
-		updates := &users.Updates{}
+		updates := &students.Updates{}
 		body, _ := ioutil.ReadAll(r.Body)
 		err = json.Unmarshal([]byte(body), updates)
 		if err != nil {
@@ -132,7 +132,7 @@ func (hc *HandlerContext) SessionsHandler(w http.ResponseWriter, r *http.Request
 			http.Error(w, "Body must be in json", http.StatusUnsupportedMediaType)
 			return
 		}
-		credentials := &users.Credentials{}
+		credentials := &students.Credentials{}
 		body, _ := ioutil.ReadAll(r.Body)
 		err := json.Unmarshal(body, credentials)
 		if err != nil {

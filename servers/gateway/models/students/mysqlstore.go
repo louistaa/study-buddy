@@ -34,7 +34,7 @@ func NewMySQLStore(dataSourceName string) (*MySQLStore, error) {
 
 // getByProvidedType gets a specific user given the provided type.
 // This requires the GetByType to be "unique" in the database.
-func (ms *MySQLStore) getByProvidedType(t GetByType, arg interface{}) (*User, error) {
+func (ms *MySQLStore) getByProvidedType(t GetByType, arg interface{}) (*Student, error) {
 	sel := string("select ID, Email, PassHash, UserName, FirstName, LastName, PhotoURL from Students where " + t + " = ?")
 
 	rows, err := ms.Database.Query(sel, arg)

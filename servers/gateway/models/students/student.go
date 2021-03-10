@@ -75,7 +75,7 @@ func (ns *NewStudent) Validate() error {
 //ToStudent converts the NewStudent to a Student, setting the
 //PhotoURL and PassHash fields appropriately
 func (ns *NewStudent) ToStudent() (*Student, error) {
-	validationErr := nu.Validate()
+	validationErr := ns.Validate()
 	if validationErr != nil {
 		return nil, validationErr
 	}

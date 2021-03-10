@@ -1,8 +1,7 @@
 package handlers
 
 import (
-	"study-buddy/servers/gateway/models/students"
-
+	"github.com/louistaa/study-buddy/servers/gateway/models/students"
 	"github.com/louistaa/study-buddy/servers/gateway/sessions"
 )
 

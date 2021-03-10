@@ -9,6 +9,7 @@ import (
 	"github.com/go-redis/redis"
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/louistaa/study-buddy/servers/gateway/handlers"
+	"github.com/louistaa/study-buddy/servers/gateway/models/students"
 	"github.com/louistaa/study-buddy/servers/gateway/sessions"
 )
 

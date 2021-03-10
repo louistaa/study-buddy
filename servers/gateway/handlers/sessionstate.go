@@ -1,8 +1,9 @@
 package handlers
 
 import (
-	"study-buddy/servers/gateway/models/students"
 	"time"
+
+	"github.com/louistaa/study-buddy/servers/gateway/models/students"
 )
 
 // SessionState struct includes start time and user
