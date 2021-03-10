@@ -1,4 +1,6 @@
 clients/node_modules
 clients/node_modules/.cache/.eslintcache
 
+clients/build
+
 .DS_Store
