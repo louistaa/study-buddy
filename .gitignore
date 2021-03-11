@@ -1,2 +1,7 @@
 api_server.pem
 yuyu_key.pem
+
+.DS_Store
+.vscode
+.idea
+node_modules
