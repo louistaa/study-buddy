@@ -1,7 +1,12 @@
+clients/node_modules
+clients/node_modules/.cache/.eslintcache
+
+clients/build
+
+.DS_Store
+
 api_server.pem
 yuyu_key.pem
-clients/node_modules
-node_modules
 
 .DS_Store
 .vscode
