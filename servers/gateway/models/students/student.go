@@ -26,6 +26,7 @@ type Student struct {
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
 	PhotoURL  string `json:"photoURL"`
+	Major     string `json:"major"`
 }
 
 //Credentials represents student sign-in credentials
@@ -42,12 +43,14 @@ type NewStudent struct {
 	UserName     string `json:"userName"`
 	FirstName    string `json:"firstName"`
 	LastName     string `json:"lastName"`
+	Major        string `json:"major"`
 }
 
 //Updates represents allowed updates to a student profile
 type Updates struct {
 	FirstName string `json:"firstName"`
 	LastName  string `json:"lastName"`
+	Major     string `json:"major"`
 }
 
 //Validate validates the new student and returns an error if
@@ -85,6 +88,7 @@ func (ns *NewStudent) ToStudent() (*Student, error) {
 		UserName:  ns.UserName,
 		FirstName: ns.FirstName,
 		LastName:  ns.LastName,
+		Major:     ns.Major,
 	}
 
 	passwordHashErr := newStudent.SetPassword(ns.Password)
@@ -154,6 +158,10 @@ func (s *Student) ApplyUpdates(updates *Updates) error {
 
 	if updates.LastName != "" {
 		s.LastName = updates.LastName
+	}
+
+	if updates.Major != "" {
+		s.Major = updates.Major
 	}
 
 	return nil
