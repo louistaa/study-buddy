@@ -13,10 +13,10 @@ type Store interface {
 	GetByID(id int64) (*CourseExpert, error)
 
 	//GetByStudentID returns the student and correlating classes with the given student ID
-	GetByExpertID(expertID int64) (*[]int64, error)
+	GetByExpertID(expertID int64) ([]int64, error)
 
 	//GetByClassID returns the class and correlating students with the given class ID
-	GetByClassID(classID int64) (*[]int64, error)
+	GetByClassID(classID int64) ([]int64, error)
 
 	//Insert inserts the student into the database, and returns
 	//the newly-inserted User, complete with the DBMS-assigned ID

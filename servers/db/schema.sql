@@ -21,7 +21,7 @@ create table if not exists Courses (
     Name varchar(128) not null,
     DepartmentName varchar(256) not null,
     ProfessorName varchar(256) not null,
-    QuarterName varchar(128) not null,
+    QuarterName varchar(128) not null
 );
 
 create table if not exists StudentCourse (
@@ -29,7 +29,7 @@ create table if not exists StudentCourse (
   StudentID int,
   CourseID int,
   FOREIGN KEY (StudentID) REFERENCES Students(ID),
-  FOREIGN KEY (CourseID) REFERENCES Courses(ID),
+  FOREIGN KEY (CourseID) REFERENCES Courses(ID)
 );
 
 create table if not exists CourseExpert (
