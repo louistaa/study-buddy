@@ -2,6 +2,7 @@ package handlers
 
 import (
 	"github.com/louistaa/study-buddy/servers/gateway/models/classes"
+	courseExpert "github.com/louistaa/study-buddy/servers/gateway/models/courseExperts"
 	"github.com/louistaa/study-buddy/servers/gateway/models/studentCourses"
 	"github.com/louistaa/study-buddy/servers/gateway/models/students"
 	"github.com/louistaa/study-buddy/servers/gateway/sessions"
@@ -17,4 +18,5 @@ type HandlerContext struct {
 	StudentStore   students.Store
 	ClassStore     classes.Store
 	StudentCourses studentCourses.Store
+	CourseExpert   courseExpert.Store
 }

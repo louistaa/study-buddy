@@ -32,7 +32,7 @@ func NewMySQLStore(dataSourceName string) (*MySQLStore, error) {
 // getByProvidedType gets a specific user given the provided type.
 // This requires the GetByType to be "unique" in the database.
 func (ms *MySQLStore) getByProvidedType(t GetByType, arg interface{}) (*CourseExpert, error) {
-	sel := string("select ID, StudentID, CourseID from CourseExpert where " + t + " = ?")
+	sel := string("select ID, ExpertID, CourseID from CourseExpert where " + t + " = ?")
 
 	rows, err := ms.Database.Query(sel, arg)
 	if err != nil {
@@ -46,8 +46,8 @@ func (ms *MySQLStore) getByProvidedType(t GetByType, arg interface{}) (*CourseEx
 	rows.Next()
 	if err := rows.Scan(
 		&courseExpert.ID,
-		&courseExpert.CourseID,
-		&courseExpert.ExpertID); err != nil {
+		&courseExpert.ExpertID,
+		&courseExpert.CourseID); err != nil {
 		return nil, err
 	}
 	return courseExpert, nil
@@ -61,8 +61,8 @@ func (ms *MySQLStore) GetByID(id int64) (*CourseExpert, error) {
 //Insert inserts the user into the database, and returns
 //the newly-inserted User, complete with the DBMS-assigned ID
 func (ms *MySQLStore) Insert(courseExpert *CourseExpert) (*CourseExpert, error) {
-	ins := "insert into CourseExpert(CourseID, ExpertID) values (?,?)"
-	res, err := ms.Database.Exec(ins, courseExpert.CourseID, courseExpert.ExpertID)
+	ins := "insert into CourseExpert(ExpertID, CourseID) values (?,?)"
+	res, err := ms.Database.Exec(ins, courseExpert.ExpertID, courseExpert.CourseID)
 	if err != nil {
 		return nil, err
 	}
@@ -74,7 +74,7 @@ func (ms *MySQLStore) Insert(courseExpert *CourseExpert) (*CourseExpert, error) 
 
 	courseExpert.ID = lid
 
-	return nil, nil
+	return courseExpert, nil
 }
 
 //Delete deletes the user with the given ID

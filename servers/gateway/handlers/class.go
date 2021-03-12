@@ -15,6 +15,15 @@ import (
 
 // ClassHandler handles requests for "classes" resource
 func (hc *HandlerContext) ClassHandler(w http.ResponseWriter, r *http.Request) {
+	auth := r.Header.Get("Authorization")
+	sessionID := sessions.SessionID(strings.TrimPrefix(auth, "Bearer "))
+	sessionState := &SessionState{}
+	err := hc.SessionStore.Get(sessionID, sessionState)
+	if err != nil {
+		http.Error(w, "Authorization required", http.StatusUnauthorized)
+		return
+	}
+
 	// POST /class - create a new course with is class ID and professor ID
 	if r.Method == "POST" {
 		if !strings.HasPrefix(r.Header.Get("Content-Type"), "application/json") {
@@ -65,7 +74,8 @@ func (hc *HandlerContext) SpecificClassHandler(w http.ResponseWriter, r *http.Re
 	}
 
 	// get the user id from the base path
-	base, endpoint := path.Split(r.URL.Path)
+	urlPath := path.Clean(r.URL.Path)
+	base, endpoint := path.Split(urlPath)
 
 	var classID int64
 	getPeople := false

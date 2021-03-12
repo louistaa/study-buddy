@@ -32,7 +32,7 @@ func NewMySQLStore(dataSourceName string) (*MySQLStore, error) {
 // getByProvidedType gets a specific user given the provided type.
 // This requires the GetByType to be "unique" in the database.
 func (ms *MySQLStore) getByProvidedType(t GetByType, arg interface{}) (*Class, error) {
-	sel := string("select ID, Name, Department, ProfessorID from Courses where " + t + " = ?")
+	sel := string("select ID, Name, DepartmentName, ProfessorName, QuarterName from Courses where " + t + " = ?")
 
 	rows, err := ms.Database.Query(sel, arg)
 	if err != nil {

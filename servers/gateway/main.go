@@ -10,6 +10,7 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 	"github.com/louistaa/study-buddy/servers/gateway/handlers"
 	"github.com/louistaa/study-buddy/servers/gateway/models/classes"
+	courseExpert "github.com/louistaa/study-buddy/servers/gateway/models/courseExperts"
 	"github.com/louistaa/study-buddy/servers/gateway/models/studentCourses"
 	"github.com/louistaa/study-buddy/servers/gateway/models/students"
 	"github.com/louistaa/study-buddy/servers/gateway/sessions"
@@ -38,6 +39,8 @@ func main() {
 
 	studentCoursesStore, err := studentCourses.NewMySQLStore(DSN)
 
+	courseExpertStore, err := courseExpert.NewMySQLStore(DSN)
+
 	classStore, err := classes.NewMySQLStore(DSN)
 
 	if err != nil {
@@ -50,6 +53,7 @@ func main() {
 		StudentStore:   studentStore,
 		ClassStore:     classStore,
 		StudentCourses: studentCoursesStore,
+		CourseExpert:   courseExpertStore,
 	}
 
 	TLSKEY := os.Getenv("TLSKEY")
@@ -61,9 +65,10 @@ func main() {
 	mux.HandleFunc("/students/", handlerContext.SpecificStudentHandler)
 	mux.HandleFunc("/sessions", handlerContext.SessionsHandler)
 	mux.HandleFunc("/sessions/", handlerContext.SpecificSessionHanlder)
-	mux.HandleFunc("/classes/", handlerContext.ClassHandler)
-	mux.HandleFunc("/classes/{id}/people", handlerContext.SpecificClassHandler)
-
+	mux.HandleFunc("/classes", handlerContext.ClassHandler)
+	mux.HandleFunc("/classes/", handlerContext.SpecificClassHandler)
+	mux.HandleFunc("/register-class", handlerContext.RegisterClass)
+	mux.HandleFunc("/register-expert", handlerContext.RegisterExpert)
 	corsMux := &handlers.CORS{Handler: mux}
 	log.Fatal(http.ListenAndServeTLS(addr, TLSCERT, TLSKEY, corsMux))
 }

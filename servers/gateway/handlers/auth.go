@@ -68,7 +68,7 @@ func (hc *HandlerContext) SpecificStudentHandler(w http.ResponseWriter, r *http.
 	}
 
 	if r.Method == "GET" {
-		userID := int64(-1)
+		var userID int64
 
 		if path.Base(r.URL.Path) == "me" {
 			userID = sessionState.Student.ID
