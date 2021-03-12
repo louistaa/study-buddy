@@ -30,7 +30,7 @@ create table if not exists StudentCourse (
     CourseID int,
     FOREIGN KEY (StudentID) REFERENCES Students(ID),
     FOREIGN KEY (CourseID) REFERENCES Courses(ID),
-    PRIMARY KEY (CourseID, ExpertID)
+    PRIMARY KEY (CourseID, StudentID)
 );
 
 create table if not exists CourseExpert (
