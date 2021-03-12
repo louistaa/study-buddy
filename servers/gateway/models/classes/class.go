@@ -2,7 +2,6 @@ package classes
 
 import (
 	"fmt"
-	"strings"
 )
 
 //Class represents a class in the database
@@ -33,7 +32,7 @@ type Updates struct {
 //Validate validates the new class and returns an error if
 //any of the validation rules fail, or nil if its valid
 func (nc *NewClass) Validate() error {
-	if len(nc.Name) == 0 || strings.Contains(nc.Name, " ") {
+	if len(nc.Name) == 0 {
 		return fmt.Errorf("Name must be non-zero length and may not contain spaces")
 	}
 

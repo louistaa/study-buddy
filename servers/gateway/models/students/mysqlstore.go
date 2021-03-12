@@ -35,7 +35,7 @@ func NewMySQLStore(dataSourceName string) (*MySQLStore, error) {
 // getByProvidedType gets a specific user given the provided type.
 // This requires the GetByType to be "unique" in the database.
 func (ms *MySQLStore) getByProvidedType(t GetByType, arg interface{}) (*Student, error) {
-	sel := string("select ID, Email, PassHash, UserName, FirstName, LastName, PhotoURL from Students where " + t + " = ?")
+	sel := string("select ID, Email, PassHash, UserName, FirstName, LastName, PhotoURL, Major from Students where " + t + " = ?")
 
 	rows, err := ms.Database.Query(sel, arg)
 	if err != nil {
@@ -54,7 +54,8 @@ func (ms *MySQLStore) getByProvidedType(t GetByType, arg interface{}) (*Student,
 		&student.UserName,
 		&student.FirstName,
 		&student.LastName,
-		&student.PhotoURL); err != nil {
+		&student.PhotoURL,
+		&student.Major); err != nil {
 		return nil, err
 	}
 	return student, nil
@@ -78,9 +79,8 @@ func (ms *MySQLStore) GetByUserName(username string) (*Student, error) {
 //Insert inserts the user into the database, and returns
 //the newly-inserted User, complete with the DBMS-assigned ID
 func (ms *MySQLStore) Insert(student *Student) (*Student, error) {
-	ins := "insert into Students(Email, PassHash, UserName, FirstName, LastName, PhotoURL) values (?,?,?,?,?,?)"
-	res, err := ms.Database.Exec(ins, student.Email, student.PassHash, student.UserName,
-		student.FirstName, student.LastName, student.PhotoURL)
+	ins := "insert into Students(Email, PassHash, UserName, FirstName, LastName, PhotoURL, Major) values (?,?,?,?,?,?,?)"
+	res, err := ms.Database.Exec(ins, student.Email, student.PassHash, student.UserName, student.FirstName, student.LastName, student.PhotoURL, student.Major)
 	if err != nil {
 		return nil, err
 	}

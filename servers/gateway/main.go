@@ -61,8 +61,8 @@ func main() {
 	mux.HandleFunc("/students/", handlerContext.SpecificStudentHandler)
 	mux.HandleFunc("/sessions", handlerContext.SessionsHandler)
 	mux.HandleFunc("/sessions/", handlerContext.SpecificSessionHanlder)
-	mux.HandleFunc("/clasess/", handlerContext.ClassHandler)
-	mux.HandleFunc("/clasess/{id}/people", handlerContext.SpecificClassHandler)
+	mux.HandleFunc("/classes/", handlerContext.ClassHandler)
+	mux.HandleFunc("/classes/{id}/people", handlerContext.SpecificClassHandler)
 
 	corsMux := &handlers.CORS{Handler: mux}
 	log.Fatal(http.ListenAndServeTLS(addr, TLSCERT, TLSKEY, corsMux))
