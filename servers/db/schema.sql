@@ -28,10 +28,8 @@ create table if not exists StudentCourse (
   ID int not null auto_increment primary key,
   StudentID int,
   CourseID int,
-  QuarterID int,
   FOREIGN KEY (StudentID) REFERENCES Students(ID),
   FOREIGN KEY (CourseID) REFERENCES Courses(ID),
-  FOREIGN KEY (QuarterID) REFERENCES Quarters(ID)
 );
 
 create table if not exists CourseExpert (
