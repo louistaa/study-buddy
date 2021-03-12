@@ -87,6 +87,7 @@ func (hc *HandlerContext) SpecificClassHandler(w http.ResponseWriter, r *http.Re
 		// get people in class
 	} else if endpoint == "experts" {
 		getExperts = true
+		classID, err = strconv.ParseInt(path.Base(base), 10, 64)
 	} else { //parse base path for id int
 		classID, err = strconv.ParseInt(endpoint, 10, 64)
 		// get class info
