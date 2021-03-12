@@ -79,13 +79,14 @@ func (hc *HandlerContext) SpecificClassHandler(w http.ResponseWriter, r *http.Re
 
 	var classID int64
 	getPeople := false
+	getExperts := false
 
 	if endpoint == "people" {
 		getPeople = true
-		base, _ = path.Split(base)
-		base, endpoint = path.Split(base)
-		classID, err = strconv.ParseInt(endpoint, 10, 64)
+		classID, err = strconv.ParseInt(path.Base(base), 10, 64)
 		// get people in class
+	} else if endpoint == "experts" {
+		getExperts = true
 	} else { //parse base path for id int
 		classID, err = strconv.ParseInt(endpoint, 10, 64)
 		// get class info
@@ -117,6 +118,28 @@ func (hc *HandlerContext) SpecificClassHandler(w http.ResponseWriter, r *http.Re
 			studentsJSON, _ := json.Marshal(students)
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte(studentsJSON))
+			return
+		} else if getExperts {
+			expertIDs, err := hc.CourseExpert.GetByClassID(classID)
+			if err != nil { // if no class is found with that ID
+				http.Error(w, "No class is found with that ID", http.StatusNotFound)
+				return
+			}
+
+			experts := []*students.Student{}
+			for _, expertID := range expertIDs {
+				expert, err := hc.StudentStore.GetByID(expertID)
+				if err != nil {
+					http.Error(w, "Error marshaling student in class", http.StatusNotFound)
+				}
+				experts = append(experts, expert)
+			}
+
+			w.Header().Add("Content-Type", "application/json")
+			expertsJSON, _ := json.Marshal(experts)
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(expertsJSON))
+			return
 		} else {
 			// get class associated with requested class id from store
 			class, err := hc.ClassStore.GetByID(classID)
@@ -128,6 +151,7 @@ func (hc *HandlerContext) SpecificClassHandler(w http.ResponseWriter, r *http.Re
 			classJSON, _ := json.Marshal(class)
 			w.WriteHeader(http.StatusOK)
 			w.Write([]byte(classJSON))
+			return
 		}
 	} else if r.Method == "DELETE" { // DELETE /class/{id} - delete course
 		_, err := hc.ClassStore.GetByID(classID)
@@ -141,6 +165,7 @@ func (hc *HandlerContext) SpecificClassHandler(w http.ResponseWriter, r *http.Re
 			return
 		}
 		w.Write([]byte("Class deleted"))
+		return
 	} else if r.Method == "PATCH" {
 		// TODO check if user is part of the staff
 		// if classID != sess.Class.ID {
@@ -168,6 +193,7 @@ func (hc *HandlerContext) SpecificClassHandler(w http.ResponseWriter, r *http.Re
 		classJSON, _ := json.Marshal(class)
 		w.WriteHeader(http.StatusOK)
 		w.Write([]byte(classJSON))
+		return
 	} else {
 		http.Error(w, "Method is not GET, PATCH, or DELETE", http.StatusMethodNotAllowed)
 		return

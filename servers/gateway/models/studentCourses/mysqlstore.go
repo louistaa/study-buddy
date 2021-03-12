@@ -131,7 +131,7 @@ func (ms *MySQLStore) GetByClassID(classID int64) ([]int64, error) {
 	}
 	defer rows.Close()
 
-	var students []int64
+	students := make([]int64, 0)
 
 	for rows.Next() {
 		var studentID int64

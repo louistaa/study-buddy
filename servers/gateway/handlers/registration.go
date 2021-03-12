@@ -50,7 +50,7 @@ func (hc *HandlerContext) RegisterClass(w http.ResponseWriter, r *http.Request) 
 
 	_, err = hc.ClassStore.GetByID(registration.CourseID)
 	if err != nil {
-		http.Error(w, "Invalid class"+err.Error(), http.StatusBadRequest)
+		http.Error(w, "Invalid class: "+err.Error(), http.StatusBadRequest)
 		return
 	}
 
@@ -102,7 +102,7 @@ func (hc *HandlerContext) RegisterExpert(w http.ResponseWriter, r *http.Request)
 
 	_, err = hc.ClassStore.GetByID(registration.CourseID)
 	if err != nil {
-		http.Error(w, "Invalid class"+err.Error(), http.StatusBadRequest)
+		http.Error(w, "Invalid class: "+err.Error(), http.StatusBadRequest)
 		return
 	}
 
