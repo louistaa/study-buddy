@@ -1,29 +1,101 @@
-import React from "react";
-import ClassPage from "./ClassPage";
-import Courses from "./Courses";
-import Chats from "./Chats"
-import { Route, Switch, Redirect } from "react-router-dom";
-import ChatSpecific from "./ChatSpecific";
+import React, { Component } from 'react';
+import Auth from './Components/Auth/Auth';
+import PageTypes from './Constants/PageTypes/PageTypes';
+import Main from './Components/Main/Main';
+import './Styles/App.css';
+import api from './Constants/APIEndpoints/APIEndpoints';
 
-export default function App() {
-  return (
-    <div className="container-fluid">
-      <div className="row">
-        <a href="/" className="col studyBuddy">iSTUDY BUDDY</a>
-        <a href="/chats" className="col chats">Chats</a>
-      </div>
+class App extends Component {
+    constructor() {
+        super();
+        this.state = {
+            page: localStorage.getItem("Authorization") ? PageTypes.signedInMain : PageTypes.signIn,
+            authToken: localStorage.getItem("Authorization") || null,
+            user: null
+        }
 
-      <Switch>
-        <Route exact path="/" component={Courses} />
-        <Route exact path="/chats" component={Chats} />
-        <Route exact path="/:courseName" component={ClassPage} />
-        <Route exact path="/chats/:person" component={ChatSpecific} />
-        <Redirect to="/" />
-      </Switch>
+        this.getCurrentUser()
+    }
 
-      <div className="row justify-content-center">
-        &copy; 2021 iStudy Buddy, YuYu Madigan, Kayla Lee, Saatvik Arya, Louis Ta
-      </div>
-    </div>
-  );
+
+    /**
+     * @description Gets the users
+     */
+    getCurrentUser = async () => {
+        if (!this.state.authToken) {
+            return;
+        }
+        const response = await fetch(api.base + api.handlers.myuser, {
+            headers: new Headers({
+                "Authorization": this.state.authToken
+            })
+        });
+        if (response.status >= 300) {
+            alert("Unable to verify login. Logging out...");
+            localStorage.setItem("Authorization", "");
+            this.setAuthToken("");
+            this.setUser(null)
+            return;
+        }
+        const user = await response.json()
+        this.setUser(user);
+
+    }
+
+    /**
+     * @description sets the page type to sign in
+     */
+    setPageToSignIn = (e) => {
+        e.preventDefault();
+        this.setState({ page: PageTypes.signIn });
+    }
+
+    /**
+     * @description sets the page type to sign up
+     */
+    setPageToSignUp = (e) => {
+        e.preventDefault();
+        this.setState({ page: PageTypes.signUp });
+    }
+
+    setPage = (e, page) => {
+        e.preventDefault();
+        this.setState({ page });
+    }
+
+    /**
+     * @description sets auth token
+     */
+    setAuthToken = (authToken) => {
+        this.setState({ authToken, page: authToken === "" ? PageTypes.signIn : PageTypes.signedInMain });
+    }
+
+    /**
+     * @description sets the user
+     */
+    setUser = (user) => {
+        this.setState({ user });
+    }
+
+    render() {
+        const { page, user } = this.state;
+        return (
+            <div>
+                {user ?
+                    <Main page={page}
+                        setPage={this.setPage}
+                        setAuthToken={this.setAuthToken}
+                        user={user}
+                        setUser={this.setUser} />
+                    :
+                    <Auth page={page}
+                        setPage={this.setPage}
+                        setAuthToken={this.setAuthToken}
+                        setUser={this.setUser} />
+                }
+            </div>
+        );
+    }
 }
+
+export default App;
