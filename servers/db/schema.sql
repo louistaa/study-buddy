@@ -25,21 +25,21 @@ create table if not exists Courses (
 );
 
 create table if not exists StudentCourse (
-    ID int not null auto_increment,
+    ID int not null auto_increment primary key,
     StudentID int,
     CourseID int,
+    UNIQUE KEY (CourseID, StudentID),
     FOREIGN KEY (StudentID) REFERENCES Students(ID),
-    FOREIGN KEY (CourseID) REFERENCES Courses(ID),
-    PRIMARY KEY (CourseID, StudentID)
+    FOREIGN KEY (CourseID) REFERENCES Courses(ID)
 );
 
 create table if not exists CourseExpert (
-    ID int not null auto_increment,
+    ID int not null auto_increment primary key,
     CourseID int,
     ExpertID int,
+    UNIQUE KEY (CourseID, ExpertID),
     FOREIGN KEY (CourseID) REFERENCES Courses(ID),
-    FOREIGN KEY (ExpertID) REFERENCES Students(ID),
-    PRIMARY KEY (CourseID, ExpertID)
+    FOREIGN KEY (ExpertID) REFERENCES Students(ID)
 );
 
 create table if not exists Ratings (
