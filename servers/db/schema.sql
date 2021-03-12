@@ -19,23 +19,10 @@ create table if not exists SignInLog (
 create table if not exists Courses (
     ID int not null auto_increment primary key,
     Name varchar(128) not null,
-    Department varchar(128) not null,
-    ProfessorID int,
-    FOREIGN KEY (ProfessorID) REFERENCES Professors(ID)
+    DepartmentName varchar(256) not null,
+    ProfessorName varchar(256) not null,
+    QuarterName varchar(128) not null,
 );
-
-create table if not exists Professors (
-  ID int not null auto_increment primary key,
-  FirstName varchar(128) not null,
-  LastName varchar(128) not null,
-);
-
-create table if not exists Quarters (
-    ID int not null auto_increment primary key,
-    Name varchar(128) not null,
-    StartDate DATE not null,
-    EndDate DATE not null
-)
 
 create table if not exists StudentCourse (
   ID int not null auto_increment primary key,
