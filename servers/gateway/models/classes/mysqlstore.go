@@ -1,8 +1,7 @@
-package students
+package classes
 
 import (
 	"database/sql"
-	"time"
 )
 
 // GetByType is an enumerate for GetBy* functions implemented
@@ -11,9 +10,7 @@ type GetByType string
 
 // These are the enumerates for GetByType
 const (
-	ID       	GetByType = "ID"
-	Name    	GetByType = "Name"
-	Department 	GetByType = "Department"
+	ID GetByType = "ID"
 )
 
 // MySQLStore is a user.Store backed by MySQL
@@ -50,34 +47,24 @@ func (ms *MySQLStore) getByProvidedType(t GetByType, arg interface{}) (*Class, e
 	if err := rows.Scan(
 		&class.ID,
 		&class.Name,
-		&class.Department,
-		&class.ProfessorID); err != nil {
+		&class.DepartmentName,
+		&class.ProfessorName,
+		&class.QuarterName); err != nil {
 		return nil, err
 	}
 	return class, nil
 }
 
-//GetByID returns the User with the given ID
+//GetByID returns the Class with the given ID
 func (ms *MySQLStore) GetByID(id int64) (*Class, error) {
 	return ms.getByProvidedType(ID, id)
 }
 
-//GetByEmail returns the User with the given email
-func (ms *MySQLStore) GetByName(name string) (*Class, error) {
-	return ms.getByProvidedType(Name, name)
-}
-
-//GetByUserName returns the User with the given Username
-func (ms *MySQLStore) GetByDepartment(username string) (*Class, error) {
-	return ms.getByProvidedType(UserName, username)
-}
-
-//Insert inserts the user into the database, and returns
-//the newly-inserted User, complete with the DBMS-assigned ID
-func (ms *MySQLStore) Insert(student *Student) (*Student, error) {
-	ins := "insert into Students(Email, PassHash, UserName, FirstName, LastName, PhotoURL) values (?,?,?,?,?,?)"
-	res, err := ms.Database.Exec(ins, student.Email, student.PassHash, student.UserName,
-		student.FirstName, student.LastName, student.PhotoURL)
+//Insert inserts the class into the database, and returns
+//the newly-inserted Class, complete with the DBMS-assigned ID
+func (ms *MySQLStore) Insert(class *Class) (*Class, error) {
+	ins := "insert into Courses(Name, DepartmentName, ProfessorName, QuarterName) values (?,?,?,?)"
+	res, err := ms.Database.Exec(ins, class.Name, class.DepartmentName, class.ProfessorName, class.QuarterName)
 	if err != nil {
 		return nil, err
 	}
@@ -87,16 +74,16 @@ func (ms *MySQLStore) Insert(student *Student) (*Student, error) {
 		return nil, lidErr
 	}
 
-	student.ID = lid
-	return student, nil
+	class.ID = lid
+	return class, nil
 }
 
-//Update applies UserUpdates to the given user ID
-//and returns the newly-updated user
-func (ms *MySQLStore) Update(id int64, updates *Updates) (*Student, error) {
+//Update applies ClassUpdates to the given class ID
+//and returns the newly-updated class
+func (ms *MySQLStore) Update(id int64, updates *Updates) (*Class, error) {
 	// Assumes updates ALWAYS includes FirstName and LastName
-	upd := "update Students set FirstName = ?, LastName = ? where ID = ?"
-	res, err := ms.Database.Exec(upd, updates.FirstName, updates.LastName, id)
+	upd := "update Courses set Name = ?, DepartmentName = ?, ProfessorName = ?, QuarterName = ? where ID = ?"
+	res, err := ms.Database.Exec(upd, updates.Name, updates.DepartmentName, updates.ProfessorName, updates.QuarterName, id)
 	if err != nil {
 		return nil, err
 	}
@@ -110,13 +97,13 @@ func (ms *MySQLStore) Update(id int64, updates *Updates) (*Student, error) {
 		return nil, ErrUserNotFound
 	}
 
-	// Get the user using GetByID
+	// Get the class using GetByID
 	return ms.GetByID(id)
 }
 
-//Delete deletes the user with the given ID
+//Delete deletes the class with the given ID
 func (ms *MySQLStore) Delete(id int64) error {
-	del := "delete from Students where ID = ?"
+	del := "delete from Courses where ID = ?"
 	res, err := ms.Database.Exec(del, id)
 	if err != nil {
 		return err
@@ -132,11 +119,4 @@ func (ms *MySQLStore) Delete(id int64) error {
 	}
 
 	return nil
-}
-
-//LogSignIn logs successful sign ins
-func (ms *MySQLStore) LogSignIn(student *Student, time time.Time, clientIP string) error {
-	ins := "insert into SignInLog(StudentID, Time, clientIP) values(?, ?, ?)"
-	_, err := ms.Database.Exec(ins, student.ID, time, clientIP)
-	return err
 }
