@@ -1,11 +1,4 @@
-<<<<<<< HEAD
-clients/node_modules
-clients/node_modules/.cache/.eslintcache
+clients/node_modules/
 
-clients/build
-
-.DS_Store
-=======
 api_server.pem
 yuyu_key.pem
->>>>>>> yuyu
