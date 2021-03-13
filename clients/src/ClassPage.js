@@ -67,11 +67,12 @@ export default function ClassPage(props) {
   let students = student.map((student) => {
     return (
       <StudentCard
-        person={student.firstName + student.lastName}
+        person={student.firstName + " " + student.lastName}
         username={student.username}
         major={student.major}
         phonenumber={student.phone}
         email={student.email}
+        id={student.id}
         key={student.id.toString()}
       />
     );
@@ -80,11 +81,12 @@ export default function ClassPage(props) {
   let experts = expert.map((expert) => {
     return (
       <StudentCard
-        person={expert.firstName + expert.lastName}
+        person={expert.firstName + " " + expert.lastName}
         username={expert.username}
         major={expert.major}
         phonenumber={expert.phone}
         email={expert.email}
+        id={student.id}
         key={expert.id.toString()}
       />
     );    
