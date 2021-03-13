@@ -13,7 +13,6 @@ export default function CourseCard(props) {
   }
 
   const handleStudentRegistration = () => {
-    console.log("we're registering!")
       axios({
         "method": "POST",
         "url": "https://studybuddy-api.kaylalee.me/register-class",
@@ -25,9 +24,6 @@ export default function CourseCard(props) {
           courseID: props.courseID,
           studentID: props.studentID
         }
-      })
-      .then((response) => {
-        console.log(response.data)
       })
       .catch((error) => {
         console.log(error)
@@ -46,9 +42,6 @@ export default function CourseCard(props) {
         courseID: props.courseID,
         ExpertID: props.studentID
       }
-    })
-    .then((response) => {
-      console.log(response.data)
     })
     .catch((error) => {
       console.log(error)

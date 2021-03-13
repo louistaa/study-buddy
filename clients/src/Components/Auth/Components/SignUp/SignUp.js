@@ -23,6 +23,7 @@ class SignUp extends Component {
       userName: "",
       firstName: "",
       lastName: "",
+      major: "",
       password: "",
       passwordConf: "",
       error: "",
@@ -48,6 +49,10 @@ class SignUp extends Component {
       {
         name: "Last name",
         key: "lastName",
+      },
+      {
+        name: "Major",
+        key: "major",
       },
       {
         name: "Password",
@@ -85,6 +90,7 @@ class SignUp extends Component {
       userName,
       firstName,
       lastName,
+      major,
       password,
       passwordConf,
     } = this.state;
@@ -94,6 +100,7 @@ class SignUp extends Component {
       userName,
       firstName,
       lastName,
+      major,
       password,
       passwordConf,
     };

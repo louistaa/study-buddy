@@ -101,7 +101,7 @@ export default function ClassPage(props) {
         <h4>Quarter Name: {course.quarterName}</h4>
       </div>
       <div className="students">
-        Current and past students of {course.name}
+        Current students of {course.name}
       </div>
       {students}
       <div className="students">
