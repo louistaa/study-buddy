@@ -88,6 +88,8 @@ class App extends Component {
 
   render() {
     const { page, user } = this.state;
+
+    let renderMyProfile = (renderProps) => <MyProfile {...renderProps} user={user} />;
     return (
       <div>
         {user ? (
@@ -114,7 +116,11 @@ class App extends Component {
 
             <Switch>
               <Route exact path="/" component={Courses} />
-              <Route exact path="/myprofile" component={MyProfile} />
+
+              <Route exact path="/myprofile"
+                      render={renderMyProfile} />
+
+              {/* <Route exact path="/myprofile" component={MyProfile} /> */}
               <Route exact path="/newCourse" component={NewCourse} />
               <Route exact path="/:courseName" component={ClassPage} />
               <Route exact path="/students/:profile" component={ClassPage} />

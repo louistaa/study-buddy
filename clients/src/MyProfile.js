@@ -1,45 +1,28 @@
-import React from 'react'
+import React from "react";
 
 import { useState, useEffect } from "react";
-import { Redirect } from 'react-router-dom';
+import { Redirect } from "react-router-dom";
 
-export default function Chats(props) {
+export default function MyProfile(props) {
   // fetch a list of the people in a course
-  const [data, setData] = useState([]);
+  // const [data, setData] = useState([]);
   // const [redirectTo, setRedirectTo] = useState(undefined)
 
-  useEffect(() => {
-    fetch("./mockProfile.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data.people); //change the state and re-render
-      });
-  }, []);
-
-  // const handleClick = (name) => {
-  //   setRedirectTo(name)
-  // }
-
-  // if (redirectTo) {
-  //   return <Redirect push to={'/chats/' + redirectTo} />
-  // }
-
-  // let studentNames = data.map((student) => {
-  //   return (
-  //     <div className="col-9">
-  //       <div className="card" onClick={() => handleClick(student.person)}>
-  //         <div className="card-body">
-  //           <h5 className="card-title studentName">{student.person}</h5>
-  //         </div>
-  //       </div>
-  //     </div>
-  //   );
-  // });
+  // useEffect(() => {
+  //   fetch("./mockProfile.json")
+  //     .then((res) => res.json())
+  //     .then((data) => {
+  //       setData(data.people); //change the state and re-render
+  //     });
+  // }, []);
 
   return (
     <div>
       <div className="students">Your profile</div>
-      WORK IN PROGRESS
+      <div className="students">First Name: {props.user.firstName} </div>
+      <div className="students">Last Name: {props.user.lastName} </div>
+      <div className="students">Your Registered Classes:  </div>
+      <div className="students">Your Expert Classes: </div>
     </div>
   );
 }
