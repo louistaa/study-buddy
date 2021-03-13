@@ -90,7 +90,6 @@ class App extends Component {
   render() {
     const { page, user } = this.state;
 
-    console.log(user)
     let renderMyProfile = (renderProps) => <MyProfile {...renderProps} user={user} />;
     return (
       <div>

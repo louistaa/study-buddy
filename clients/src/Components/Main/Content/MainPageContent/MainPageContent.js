@@ -1,10 +1,9 @@
-import React, { useState, useEffect } from 'react';
-import PageTypes from '../../../../Constants/PageTypes/PageTypes';
+import React, { useEffect } from 'react';
 import './Styles/MainPageContent.css';
 import api from '../../../../Constants/APIEndpoints/APIEndpoints';
 
 const MainPageContent = ({ user, setPage }) => {
-    const [avatar, setAvatar] = useState(null)
+    // const [avatar, setAvatar] = useState(null)
 
     async function fetchAvatar() {
         const response = await fetch(api.base + api.handlers.myuserAvatar, {
@@ -15,11 +14,11 @@ const MainPageContent = ({ user, setPage }) => {
         });
         if (response.status >= 300) {
             // const error = await response.text();
-            setAvatar(user.photoURL)
+            // setAvatar(user.photoURL)
             return;
         }
-        const imgBlob = await response.blob();
-        setAvatar(URL.createObjectURL(imgBlob));
+        // const imgBlob = await response.blob();
+        // setAvatar(URL.createObjectURL(imgBlob));
     }
 
     useEffect(() => {

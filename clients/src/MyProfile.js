@@ -1,8 +1,5 @@
 import React from "react";
 
-import { useState, useEffect } from "react";
-import { Redirect } from "react-router-dom";
-
 export default function MyProfile(props) {
   // fetch a list of the people in a course
   // const [data, setData] = useState([]);

@@ -7,7 +7,7 @@ import UpdateAvatar from "./Components/UpdateAvatar/UpdateAvatar";
 
 const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
   let content = <></>;
-  let contentPage = true;
+  // let contentPage = true;
   switch (page) {
     case PageTypes.signedInMain:
       content = <MainPageContent user={user} setPage={setPage} />;
@@ -20,7 +20,7 @@ const Main = ({ page, setPage, setAuthToken, setUser, user }) => {
       break;
     default:
       content = <>Error, invalid path reached</>;
-      contentPage = false;
+      // contentPage = false;
       break;
   }
   return (

@@ -32,7 +32,7 @@ export default function Courses(props) {
   }, []);
 
   let courses;
-  console.log(classes)
+  // console.log(classes)
   if (classes != null) {
      courses = classes.map((course) => {
       return (

@@ -23,8 +23,8 @@ export default function CourseCard(props) {
           <p className="card-text">Quarter: &nbsp;{props.quarter}</p>
         </div>
         <div className="registration">
-          <button type="button" class="btn btn-outline-primary">Enroll as Student</button>
-          <button type="button" class="btn btn-outline-primary">Enroll as Expert</button>  
+          <button type="button" className="btn btn-outline-primary">Enroll as Student</button>
+          <button type="button" className="btn btn-outline-primary">Enroll as Expert</button>  
         </div>
       </div>
     </div> 
