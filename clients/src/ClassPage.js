@@ -68,9 +68,9 @@ export default function ClassPage(props) {
     return (
       <StudentCard
         person={student.firstName + " " + student.lastName}
-        username={student.username}
+        username={student.userName}
         major={student.major}
-        phonenumber={student.phone}
+        phonenumber={student.phoneNumber}
         email={student.email}
         id={student.id}
         key={student.id.toString()}
@@ -82,9 +82,9 @@ export default function ClassPage(props) {
     return (
       <StudentCard
         person={expert.firstName + " " + expert.lastName}
-        username={expert.username}
+        username={expert.userName}
         major={expert.major}
-        phonenumber={expert.phone}
+        phonenumber={expert.phoneNumber}
         email={expert.email}
         id={student.id}
         key={expert.id.toString()}

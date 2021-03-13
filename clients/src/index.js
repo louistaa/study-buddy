@@ -3,10 +3,10 @@ import ReactDOM from 'react-dom';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
 
-import { BrowserRouter } from "react-router-dom"; // npm install react-router-dom
+import { HashRouter } from "react-router-dom"; // npm install react-router-dom
 import 'bootstrap/dist/css/bootstrap.min.css'; // npm install react-bootstrap bootstrap
 
-ReactDOM.render(<BrowserRouter><App /></BrowserRouter>, document.getElementById('root'));
+ReactDOM.render(<HashRouter><App /></HashRouter>, document.getElementById('root'));
 
 
 // If you want your app to work offline and load faster, you can change

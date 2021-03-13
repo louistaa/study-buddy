@@ -109,7 +109,7 @@ class CourseForm extends Component {
                     <input
                         value={values[key]}
                         name={key}
-                        onChange={this.setField}
+                        onChange={ this.setField}
                         
                     />
                 </div>

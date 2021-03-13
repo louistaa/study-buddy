@@ -8,7 +8,7 @@ import api from "./Constants/APIEndpoints/APIEndpoints";
 import ClassPage from "./ClassPage";
 import Courses from "./Courses";
 import MyProfile from "./MyProfile";
-import { Route, Switch, Redirect } from "react-router-dom";
+import { Route, Switch, Redirect, Link } from "react-router-dom";
 import CourseForm from "./NewCourse";
 import UserProfile from "./UserProfile";
 
@@ -104,15 +104,9 @@ class App extends Component {
             />
 
             <div className="row">
-              <a href="/" className="col studyBuddy">
-                iSTUDY BUDDY
-              </a>
-              <a href="/myprofile" className="col chats">
-                My Profile
-              </a>
-              <a href="/newCourse" className="myProfile">
-                Add Course
-              </a>
+              <Link to="/"className="col studyBuddy">iSTUDY BUDDY</Link>
+              <Link to="/myprofile"className="col chats">My Profile</Link>
+              <Link to="/newCourse"className="myProfile">Add Course</Link>
             </div>
 
             <Switch>
@@ -124,7 +118,6 @@ class App extends Component {
                   <Courses {...props} user={user} authToken={this.state.authToken} />
                 )}
               />
-              <Route exact path="/myprofile" component={MyProfile} />
               <Route exact path="/newCourse" render={(props) => (
                   <CourseForm {...props} authToken={this.state.authToken} />
                 )}
