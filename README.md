@@ -1,4 +1,7 @@
 # iStudy Buddy
+Client: https://studybuddy.kaylalee.me/#/
+API: https://studybuddy-api.kaylalee.me/
+
 ## Project Description
 iStudy Buddy is an application that will be primarily used by UW students, where students can use to find study buddies 
 to study with for specific classes. Our application allows students to register for the classes that they are in, allowing 
