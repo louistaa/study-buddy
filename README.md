@@ -27,7 +27,7 @@ experts are kept track of.
 ### Use cases and priority
 | Priority    | User        | Description |
 | ----------- | ----------- | ----------- |
-| P0      | Student        | As a student, I want to view all available classes  and register for one |
+| P0          | Student     | As a student, I want to view all available classes  and register for one |
 | P0   | Student        | As a student, I want to see who is in my class and their applicable contact information |
 | P1   | Expert        | As an  expert, I want toregister as an expert for a class to make my tutoring services available |
 
