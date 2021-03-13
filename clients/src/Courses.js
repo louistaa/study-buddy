@@ -41,6 +41,7 @@ export default function Courses(props) {
           department={course.departmentName}
           professor={course.professorName}
           quarter={course.quarterName}
+          courseID={course.id}
           key={course.id.toString()}
         />
       );

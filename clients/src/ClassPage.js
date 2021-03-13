@@ -2,69 +2,110 @@ import React from "react";
 import { useParams } from "react-router-dom";
 import { useState, useEffect } from "react";
 import StudentCard from './StudentCard';
+import axios from 'axios';
 
 
 export default function ClassPage(props) {
-  const urlParams = useParams();
-
-  // grab the course name from the URL params
-  let courseName = urlParams.courseName;
+  let { classID } = useParams();
 
   // fetch a list of the people in a course
-  const [data, setData] = useState([]);
+  const [student, setStudents] = useState([]);
+  const [expert, setExperts] = useState([]);
+  const [course, setCourse] = useState([]);
 
   
-  // useEffect(() => {
-  //   axios({
-  //     "method": "GET",
-  //     "url": "https://studybuddy-api.kaylalee.me/classes",
-  //     "headers": {
-  //       "Authorization": props.authToken
-  //     }
-  //   })
-  //   .then((response) => {
-  //     setClasses(response.data);
-  //   })
-  //   .catch((error) => {
-  //     console.log(error)
-  //   })
-  // }, []);
+  useEffect(() => {
+    axios({
+      "method": "GET",
+      "url": "https://studybuddy-api.kaylalee.me/classes/" + classID,
+      "headers": {
+        "Authorization": props.authToken
+      }
+    })
+    .then((response) => {
+      setCourse(response.data);
+      console.log(course)
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }, []);
 
   useEffect(() => {
-    fetch("./classSpecificPeople.json")
-      .then((res) => res.json())
-      .then((data) => {
-        setData(data.people); //change the state and re-render
-      });
+    axios({
+      "method": "GET",
+      "url": "https://studybuddy-api.kaylalee.me/classes/" + classID + "/people",
+      "headers": {
+        "Authorization": props.authToken
+      }
+    })
+    .then((response) => {
+      setStudents(response.data);
+    })
+    .catch((error) => {
+      console.log(error)
+    })
+  }, []);
+
+  useEffect(() => {
+    axios({
+      "method": "GET",
+      "url": "https://studybuddy-api.kaylalee.me/classes/" + classID + "/experts",
+      "headers": {
+        "Authorization": props.authToken
+      }
+    })
+    .then((response) => {
+      setExperts(response.data);
+    })
+    .catch((error) => {
+      console.log(error)
+    })
   }, []);
 
 
-  let students = data.map((student) => {
+  let students = student.map((student) => {
     return (
       <StudentCard
-        person={student.person}
-        status={student.status}
+        person={student.firstName + student.lastName}
+        username={student.username}
+        major={student.major}
+        phonenumber={student.phone}
+        email={student.email}
         key={student.id.toString()}
       />
     );
   });
 
+  let experts = expert.map((expert) => {
+    return (
+      <StudentCard
+        person={expert.firstName + expert.lastName}
+        username={expert.username}
+        major={expert.major}
+        phonenumber={expert.phone}
+        email={expert.email}
+        key={expert.id.toString()}
+      />
+    );    
+  });
+
   return (
     <div>
-      <div className="students">
-        Current and past students of {courseName}
+      <div className="courseInfo">
+        <h3>Course Name: {course.name}</h3>
+        <h4>Department Name: {course.departmentName}</h4>
+        <h4>Professor Name: {course.professorName}</h4>
+        <h4>Quarter Name: {course.quarterName}</h4>
       </div>
-      {/* <div className="chatInstructions">
-        Click on a student name to chat with them!
-      </div> */}
+      <div className="students">
+        Current and past students of {course.name}
+      </div>
       {students}
       <div className="students">
         Students available as an Expert of {courseName}
       </div>
-      {/* <div className="chatInstructions">
-        Click on a student name to chat with them!
-      </div> */}
-      {students}
+      {experts}
     </div>
   );
 }
