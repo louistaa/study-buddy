@@ -13,6 +13,23 @@ export default function ClassPage(props) {
   // fetch a list of the people in a course
   const [data, setData] = useState([]);
 
+  
+  // useEffect(() => {
+  //   axios({
+  //     "method": "GET",
+  //     "url": "https://studybuddy-api.kaylalee.me/classes",
+  //     "headers": {
+  //       "Authorization": props.authToken
+  //     }
+  //   })
+  //   .then((response) => {
+  //     setClasses(response.data);
+  //   })
+  //   .catch((error) => {
+  //     console.log(error)
+  //   })
+  // }, []);
+
   useEffect(() => {
     fetch("./classSpecificPeople.json")
       .then((res) => res.json())

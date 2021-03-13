@@ -9,7 +9,7 @@ import ClassPage from "./ClassPage";
 import Courses from "./Courses";
 import MyProfile from "./MyProfile";
 import { Route, Switch, Redirect } from "react-router-dom";
-import NewCourse from "./NewCourse";
+import CourseForm from "./NewCourse";
 
 class App extends Component {
   constructor() {
@@ -113,11 +113,16 @@ class App extends Component {
             </div>
 
             <Switch>
-              <Route exact path="/" component={Courses} />
+              <Route exact path="/" render={(props) => (
+                  <Courses {...props} authToken={this.state.authToken} />
+                )}
+              />
               <Route exact path="/myprofile" component={MyProfile} />
-              <Route exact path="/newCourse" component={NewCourse} />
+              <Route exact path="/newCourse" render={(props) => (
+                  <CourseForm {...props} authToken={this.state.authToken} />
+                )}
+              />
               <Route exact path="/:courseName" component={ClassPage} />
-              <Route exact path="/students/:profile" component={ClassPage} />
               <Redirect to="/" />
             </Switch>
           </div>
