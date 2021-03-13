@@ -1,5 +1,6 @@
 # iStudy Buddy
 Client: https://studybuddy.kaylalee.me/#/
+
 API: https://studybuddy-api.kaylalee.me/
 
 ## Project Description
