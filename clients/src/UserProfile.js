@@ -32,8 +32,8 @@ export default function UserProfile(props) {
       <div className="students">Major: {student.major}</div>
       <div className="students">E-mail: {student.email}</div>
       <div className="students">Phone Number: {student.phoneNumber}</div>
-      <div className="students">Registered Classes:  </div>
-      <div className="students">Expert Classes: </div>
+      {/* <div className="students">Registered Classes:  </div>
+      <div className="students">Expert Classes: </div> */}
       
       
     </div>

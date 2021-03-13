@@ -24,7 +24,6 @@ export default function ClassPage(props) {
     })
     .then((response) => {
       setCourse(response.data);
-      console.log(course)
     })
     .catch((error) => {
       console.log(error)
@@ -86,7 +85,7 @@ export default function ClassPage(props) {
         major={expert.major}
         phonenumber={expert.phoneNumber}
         email={expert.email}
-        id={student.id}
+        id={expert.id}
         key={expert.id.toString()}
       />
     );    

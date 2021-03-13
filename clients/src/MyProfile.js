@@ -18,8 +18,8 @@ export default function MyProfile(props) {
       <div className="students">Your profile</div>
       <div className="students">First Name: {props.user.firstName} </div>
       <div className="students">Last Name: {props.user.lastName} </div>
-      <div className="students">Your Registered Classes:  </div>
-      <div className="students">Your Expert Classes: </div>
+      {/* <div className="students">Your Registered Classes:  </div>
+      <div className="students">Your Expert Classes: </div> */}
       <div className="students">Your E-mail: {props.user.email} </div>
       <div className="students">Your Phone Number : {props.user.phoneNumber} </div>
     </div>

@@ -61,7 +61,6 @@ class CourseForm extends Component {
    * @description submitForm handles the form submission
    */
   submitForm = async (e) => {
-      console.log("Hello I have been submitted")
     e.preventDefault();
     const {
       name,
