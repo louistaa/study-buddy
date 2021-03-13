@@ -103,7 +103,7 @@ export default function ClassPage(props) {
       </div>
       {students}
       <div className="students">
-        Students available as an Expert of {courseName}
+        Students available as an Expert of {course.name}
       </div>
       {experts}
     </div>
