@@ -10,6 +10,7 @@ import Courses from "./Courses";
 import MyProfile from "./MyProfile";
 import { Route, Switch, Redirect } from "react-router-dom";
 import CourseForm from "./NewCourse";
+import UserProfile from "./UserProfile";
 
 class App extends Component {
   constructor() {
@@ -128,6 +129,7 @@ class App extends Component {
                   <CourseForm {...props} authToken={this.state.authToken} />
                 )}
               />
+              <Route exact path="/profiles/:person" component={UserProfile} />
               <Route exact path="/:courseName" component={ClassPage} />
               <Redirect to="/" />
             </Switch>

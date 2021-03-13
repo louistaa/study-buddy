@@ -44,7 +44,6 @@ export default function ClassPage(props) {
       <StudentCard
         person={student.person}
         status={student.status}
-        lookingFor={student.lookingFor}
         key={student.id.toString()}
       />
     );
@@ -60,7 +59,7 @@ export default function ClassPage(props) {
       </div> */}
       {students}
       <div className="students">
-        Current students avaialable as an Expert  of {courseName}
+        Students available as an Expert of {courseName}
       </div>
       {/* <div className="chatInstructions">
         Click on a student name to chat with them!
