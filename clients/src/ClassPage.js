@@ -38,9 +38,16 @@ export default function ClassPage(props) {
       <div className="students">
         Current and past students of {courseName}
       </div>
-      <div className="chatInstructions">
+      {/* <div className="chatInstructions">
         Click on a student name to chat with them!
+      </div> */}
+      {students}
+      <div className="students">
+        Current students avaialable as an Expert  of {courseName}
       </div>
+      {/* <div className="chatInstructions">
+        Click on a student name to chat with them!
+      </div> */}
       {students}
     </div>
   );

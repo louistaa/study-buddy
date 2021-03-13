@@ -66,6 +66,15 @@
   font-weight: 600;
 }
 
+.registration button{
+  justify-content: space-around;
+  padding: 10px;
+  width: 20%;
+  margin: 5px;
+  text-align: -webkit-center;
+}
+
+
 @media (max-width: 920px) {
   .studyBuddy {
     font-size: 40px;

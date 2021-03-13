@@ -21,6 +21,10 @@ export default function CourseCard(props) {
           <h6 className="card-subtitle mb-2 text-muted">{props.numStudents} students in this class</h6>
           <p className="card-text">{props.description}</p>
         </div>
+        <div className="registration">
+          <button type="button" class="btn btn-outline-primary">Enroll as Student</button>
+          <button type="button" class="btn btn-outline-primary">Enroll as Expert</button>  
+        </div>
       </div>
     </div> 
   )

@@ -22,6 +22,10 @@ export default function StudentCard(props) {
           <h6 className="card-subtitle mb-2 text-muted">{props.status}</h6>
           <p className="card-text">Looking for: {props.lookingFor}</p>
         </div>
+        <div className="contact">
+          <button type="button" class="btn btn-outline-primary">Contact Me</button>
+          <button type="button" class="btn btn-outline-primary">View Profile</button>
+        </div>
       </div>
     </div>
   );
