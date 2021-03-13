@@ -22,6 +22,6 @@ type Store interface {
 	//the newly-inserted User, complete with the DBMS-assigned ID
 	Insert(studentCourse *StudentCourses) (*StudentCourses, error)
 
-	//Delete deletes the student with the given ID
-	Delete(id int64) error
+	//Delete deletes the registration entry with the given studentID and courseID
+	Delete(classID int64, studentID int64) error
 }

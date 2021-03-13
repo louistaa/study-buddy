@@ -78,9 +78,9 @@ func (ms *MySQLStore) Insert(studentCourse *StudentCourses) (*StudentCourses, er
 }
 
 //Delete deletes the user with the given ID
-func (ms *MySQLStore) Delete(id int64) error {
-	del := "delete from StudentCourse where ID = ?"
-	res, err := ms.Database.Exec(del, id)
+func (ms *MySQLStore) Delete(classID int64, studentID int64) error {
+	del := "delete from StudentCourse where StudentID = ? and CourseID = ?"
+	res, err := ms.Database.Exec(del, studentID, classID)
 	if err != nil {
 		return err
 	}

@@ -23,5 +23,5 @@ type Store interface {
 	Insert(courseExpert *CourseExpert) (*CourseExpert, error)
 
 	//Delete deletes the student with the given ID
-	Delete(id int64) error
+	Delete(expertID int64, courseID int64) error
 }
