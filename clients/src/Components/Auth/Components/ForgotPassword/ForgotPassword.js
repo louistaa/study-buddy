@@ -68,7 +68,10 @@ class ForgotPassword extends Component {
     render() {
         const { email, password, passwordConf, resetCode, resetCodeSent, error } = this.state;
         return <>
+        <div className="row justify-content-center">
             <Errors error={error} setError={this.setError} />
+            </div>
+            <div className="row justify-content-center">
             {resetCodeSent ?
                 <>
                     <form onSubmit={(e) => this.updatePassword(e)}>
@@ -97,7 +100,10 @@ class ForgotPassword extends Component {
                         <input type="submit" value="Send me a reset code" />
                     </form>
                 </>}
+                </div>
+                <div className="row justify-content-center">
             <button onClick={(e) => this.props.setPage(e, PageTypes.signIn)}>Back to sign in</button>
+            </div>
 
 
         </>

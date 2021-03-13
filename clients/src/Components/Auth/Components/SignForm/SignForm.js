@@ -26,6 +26,7 @@ SignForm.propTypes = {
     submitForm: PropTypes.func.isRequired,
     values: PropTypes.shape({
         email: PropTypes.string.isRequired,
+        phoneNumber: PropTypes.string,
         userName: PropTypes.string,
         firstName: PropTypes.string,
         lastName: PropTypes.string,

@@ -1,0 +1,28 @@
+{
+  "people": [
+    {
+      "id": 1,
+      "person": "Louis Ta (you)",
+      "status": "Currently Enrolled",
+      "lookingFor": "A fun time"
+    },
+    {
+      "id": 2,
+      "person": "YuYu Madigan",
+      "status": "Currently Enrolled",
+      "lookingFor": "Homework partners"
+    },
+    {
+      "id": 3,
+      "person": "Kayla Lee",
+      "status": "Enrolled Spring 2019",
+      "lookingFor": "To tutor"
+    },
+    {
+      "id": 4,
+      "person": "Saatvik Arya",
+      "status": "Enrolled Autumn 2018",
+      "lookingFor": "To meet new people"
+    }
+  ]
+}
