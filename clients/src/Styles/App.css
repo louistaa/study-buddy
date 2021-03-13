@@ -28,6 +28,14 @@
   text-align: right !important;
 }
 
+.myProfile {
+  font-size: 40px;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-right: 20px;
+  text-align: right !important;
+}
+
 .signOut {
   text-align: right !important;
   margin-top: -30px;
@@ -74,6 +82,10 @@
   text-align: -webkit-center;
 }
 
+
+form {
+  padding: 1rem;
+}
 
 @media (max-width: 920px) {
   .studyBuddy {

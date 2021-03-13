@@ -9,7 +9,7 @@ import ClassPage from "./ClassPage";
 import Courses from "./Courses";
 import MyProfile from "./MyProfile";
 import { Route, Switch, Redirect } from "react-router-dom";
-import CourseForm from "./NewCourse";
+import NewCourse from "./NewCourse";
 
 class App extends Component {
   constructor() {
@@ -107,7 +107,7 @@ class App extends Component {
               <a href="/myprofile" className="col chats">
                 My Profile
               </a>
-              <a href="/newCourse" className="col chats">
+              <a href="/newCourse" className="myProfile">
                 Add Course
               </a>
             </div>
@@ -115,7 +115,7 @@ class App extends Component {
             <Switch>
               <Route exact path="/" component={Courses} />
               <Route exact path="/myprofile" component={MyProfile} />
-              <Route exact path="/newCourse" component={CourseForm} />
+              <Route exact path="/newCourse" component={NewCourse} />
               <Route exact path="/:courseName" component={ClassPage} />
               <Route exact path="/students/:profile" component={ClassPage} />
               <Redirect to="/" />
