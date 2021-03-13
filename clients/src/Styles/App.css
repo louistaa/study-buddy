@@ -82,9 +82,12 @@
   text-align: -webkit-center;
 }
 
-
 form {
   padding: 1rem;
+}
+
+.courseInfo {
+  padding-left: 1rem;
 }
 
 @media (max-width: 920px) {
