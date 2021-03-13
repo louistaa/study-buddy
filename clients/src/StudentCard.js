@@ -1,13 +1,13 @@
 import React from 'react'
 
 import { useState } from "react";
-import { Redirect } from 'react-router-dom';
+import { Redirect, useHistory } from 'react-router-dom';
 
 export default function StudentCard(props) {
-  const [redirectTo, setRedirectTo] = useState(undefined)
+  let history = useHistory();
 
   const handleClick = () => {
-    setRedirectTo(props.person)
+    history.push("/profiles/" + props.id)
   }
 
   return (

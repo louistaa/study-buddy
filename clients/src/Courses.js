@@ -42,6 +42,8 @@ export default function Courses(props) {
           professor={course.professorName}
           quarter={course.quarterName}
           courseID={course.id}
+          authToken={props.authToken}
+          studentID={props.user.id}
           key={course.id.toString()}
         />
       );

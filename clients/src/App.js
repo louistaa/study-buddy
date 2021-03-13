@@ -121,7 +121,7 @@ class App extends Component {
                       render={renderMyProfile} />
 
               <Route exact path="/" render={(props) => (
-                  <Courses {...props} authToken={this.state.authToken} />
+                  <Courses {...props} user={user} authToken={this.state.authToken} />
                 )}
               />
               <Route exact path="/myprofile" component={MyProfile} />
@@ -129,7 +129,9 @@ class App extends Component {
                   <CourseForm {...props} authToken={this.state.authToken} />
                 )}
               />
-              <Route exact path="/profiles/:person" component={UserProfile} />
+              <Route exact path="/profiles/:person" render={(props) => (
+                <UserProfile {...props} authToken={this.state.authToken} />
+              )} />
               <Route exact path="/class/:classID" render={(props) => (
                   <ClassPage {...props} authToken={this.state.authToken} />
                 )}
