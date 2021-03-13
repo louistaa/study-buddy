@@ -1,0 +1,12 @@
+{
+  "exampleProfile": [
+    {
+      "firstName": "Louis",
+      "lastName": "Ta",
+      "phoneNumber": "4253143555",
+      "eMail": "l@l.com",
+      "registeredClasses": ["INFO 441", "INFO371"],
+      "expertClasses": ["INFO340"]
+    }
+  ]
+}
