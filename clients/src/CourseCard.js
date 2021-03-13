@@ -19,7 +19,8 @@ export default function CourseCard(props) {
         <div className="card-body">
           <h5 className="card-title">{props.course}</h5>
           <h6 className="card-subtitle mb-2 text-muted">Professor: &nbsp; {props.professor}</h6>
-          <p className="card-text">Department: &nbsp; {props.department} Quarter: &nbsp; {props.quarter}</p>
+          <p className="card-text">Department: &nbsp;{props.department}</p>
+          <p className="card-text">Quarter: &nbsp;{props.quarter}</p>
         </div>
         <div className="registration">
           <button type="button" class="btn btn-outline-primary">Enroll as Student</button>
