@@ -21,21 +21,23 @@ create table if not exists Courses (
     Name varchar(128) not null,
     DepartmentName varchar(256) not null,
     ProfessorName varchar(256) not null,
-    QuarterName varchar(128) not null,
+    QuarterName varchar(128) not null
 );
 
 create table if not exists StudentCourse (
-  ID int not null auto_increment primary key,
-  StudentID int,
-  CourseID int,
-  FOREIGN KEY (StudentID) REFERENCES Students(ID),
-  FOREIGN KEY (CourseID) REFERENCES Courses(ID),
+    ID int not null auto_increment primary key,
+    StudentID int,
+    CourseID int,
+    UNIQUE KEY (CourseID, StudentID),
+    FOREIGN KEY (StudentID) REFERENCES Students(ID),
+    FOREIGN KEY (CourseID) REFERENCES Courses(ID)
 );
 
 create table if not exists CourseExpert (
     ID int not null auto_increment primary key,
     CourseID int,
     ExpertID int,
+    UNIQUE KEY (CourseID, ExpertID),
     FOREIGN KEY (CourseID) REFERENCES Courses(ID),
     FOREIGN KEY (ExpertID) REFERENCES Students(ID)
 );

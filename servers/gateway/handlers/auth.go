@@ -9,6 +9,7 @@ import (
 	"strings"
 	"time"
 
+	"github.com/louistaa/study-buddy/servers/gateway/models/classes"
 	"github.com/louistaa/study-buddy/servers/gateway/models/students"
 	"github.com/louistaa/study-buddy/servers/gateway/sessions"
 
@@ -68,10 +69,33 @@ func (hc *HandlerContext) SpecificStudentHandler(w http.ResponseWriter, r *http.
 	}
 
 	if r.Method == "GET" {
-		userID := int64(-1)
+		var userID int64
 
-		if path.Base(r.URL.Path) == "me" {
+		base, endpoint := path.Split(path.Clean(r.URL.Path))
+		if endpoint == "me" {
 			userID = sessionState.Student.ID
+		} else if endpoint == "classes" {
+			userID, _ = strconv.ParseInt(path.Base(base), 10, 64)
+			classIDs, err := hc.StudentCourses.GetByStudentID(userID)
+			if err != nil { // if no class is found with that ID
+				http.Error(w, "No student is found with that ID", http.StatusNotFound)
+				return
+			}
+
+			classes := []*classes.Class{}
+			for _, classID := range classIDs {
+				class, err := hc.ClassStore.GetByID(classID)
+				if err != nil {
+					http.Error(w, "Error marshaling class", http.StatusNotFound)
+				}
+				classes = append(classes, class)
+			}
+
+			w.Header().Add("Content-Type", "application/json")
+			classesJSON, _ := json.Marshal(classes)
+			w.WriteHeader(http.StatusOK)
+			w.Write([]byte(classesJSON))
+			return
 		} else {
 			userID, _ = strconv.ParseInt(path.Base(r.URL.Path), 10, 64)
 		}

@@ -1,8 +1,7 @@
-package students
+package classes
 
 import (
 	"errors"
-	"time"
 )
 
 //ErrUserNotFound is returned when the student can't be found
@@ -12,9 +11,6 @@ var ErrUserNotFound = errors.New("class not found")
 type Store interface {
 	//GetByID returns the Class with the given ID
 	GetByID(id int64) (*Class, error)
-
-	//GetByClassName returns the Class with the given class name
-	GetByClassName(className string) (*Class, error)
 
 	//Insert inserts the class into the database, and returns
 	//the newly-inserted Class, complete with the DBMS-assigned ID
