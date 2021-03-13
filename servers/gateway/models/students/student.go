@@ -19,14 +19,15 @@ var bcryptCost = 13
 
 //Student represents a student account in the database
 type Student struct {
-	ID        int64  `json:"id"`
-	Email     string `json:"-"` //never JSON encoded/decoded
-	PassHash  []byte `json:"-"` //never JSON encoded/decoded
-	UserName  string `json:"userName"`
-	FirstName string `json:"firstName"`
-	LastName  string `json:"lastName"`
-	PhotoURL  string `json:"photoURL"`
-	Major     string `json:"major"`
+	ID          int64  `json:"id"`
+	Email       string `json:"email"`
+	PassHash    []byte `json:"-"` //never JSON encoded/decoded
+	UserName    string `json:"userName"`
+	FirstName   string `json:"firstName"`
+	LastName    string `json:"lastName"`
+	PhotoURL    string `json:"photoURL"`
+	Major       string `json:"major"`
+	PhoneNumber string `json:"phoneNumber"`
 }
 
 //Credentials represents student sign-in credentials
@@ -44,6 +45,7 @@ type NewStudent struct {
 	FirstName    string `json:"firstName"`
 	LastName     string `json:"lastName"`
 	Major        string `json:"major"`
+	PhoneNumber  string `json:"phoneNumber"`
 }
 
 //Updates represents allowed updates to a student profile
@@ -84,11 +86,12 @@ func (ns *NewStudent) ToStudent() (*Student, error) {
 	}
 
 	newStudent := &Student{
-		Email:     ns.Email,
-		UserName:  ns.UserName,
-		FirstName: ns.FirstName,
-		LastName:  ns.LastName,
-		Major:     ns.Major,
+		Email:       ns.Email,
+		UserName:    ns.UserName,
+		FirstName:   ns.FirstName,
+		LastName:    ns.LastName,
+		Major:       ns.Major,
+		PhoneNumber: ns.PhoneNumber,
 	}
 
 	passwordHashErr := newStudent.SetPassword(ns.Password)
