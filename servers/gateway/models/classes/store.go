@@ -22,4 +22,6 @@ type Store interface {
 
 	//Delete deletes the class with the given ID
 	Delete(id int64) error
+
+	AllClasses() (*[]Class, error)
 }

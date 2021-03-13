@@ -57,6 +57,17 @@ func (hc *HandlerContext) ClassHandler(w http.ResponseWriter, r *http.Request) {
 		classJSON, _ := json.Marshal(class)
 		w.WriteHeader(http.StatusCreated)
 		w.Write([]byte(classJSON))
+	} else if r.Method == "GET" {
+		classes, err := hc.ClassStore.AllClasses()
+		if err != nil {
+			http.Error(w, "Couldnt load classes", http.StatusInternalServerError)
+			return
+		}
+		w.Header().Set("Content-Type", "application/json")
+		classJSON, _ := json.Marshal(classes)
+		w.WriteHeader(http.StatusCreated)
+		w.Write([]byte(classJSON))
+		return
 	} else {
 		http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
 	}

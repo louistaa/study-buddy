@@ -120,3 +120,22 @@ func (ms *MySQLStore) Delete(id int64) error {
 
 	return nil
 }
+
+// Gets all classes
+func (ms *MySQLStore) AllClasses() (*[]Class, error) {
+	sel := string("select ID, Name, DepartmentName, ProfessorName, QuarterName from Courses")
+
+	rows, err := ms.Database.Query(sel)
+	var classes []Class
+
+	for rows.Next() {
+		var class Class
+		err = rows.Scan(&class.ID, &class.Name, &class.DepartmentName, &class.ProfessorName, &class.QuarterName)
+		if err != nil {
+			return nil, err
+		}
+		classes = append(classes, class)
+	}
+
+	return &classes, nil
+}
