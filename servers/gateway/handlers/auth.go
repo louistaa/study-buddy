@@ -74,9 +74,15 @@ func (hc *HandlerContext) SpecificStudentHandler(w http.ResponseWriter, r *http.
 		base, endpoint := path.Split(path.Clean(r.URL.Path))
 		if endpoint == "me" {
 			userID = sessionState.Student.ID
-		} else if endpoint == "classes" {
+		} else if endpoint == "classes" || endpoint == "expertise" {
 			userID, _ = strconv.ParseInt(path.Base(base), 10, 64)
-			classIDs, err := hc.StudentCourses.GetByStudentID(userID)
+			var classIDs []int64
+			if endpoint == "classes" {
+				classIDs, err = hc.StudentCourses.GetByStudentID(userID)
+			} else {
+				classIDs, err = hc.CourseExpert.GetByExpertID(userID)
+			}
+
 			if err != nil { // if no class is found with that ID
 				http.Error(w, "No student is found with that ID", http.StatusNotFound)
 				return
