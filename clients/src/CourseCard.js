@@ -1,17 +1,34 @@
-import React, { useState } from 'react'; //import React Component
-import { Redirect } from 'react-router-dom';
+import React from 'react'; //import React Component
+import { useHistory } from 'react-router-dom';
+// import { useParams } from "react-router-dom";
+// import { useEffect } from "react";
+// import axios from 'axios';
 
 export default function CourseCard(props) {
-  const [redirectTo, setRedirectTo] = useState(undefined)
+  let history = useHistory();
+
 
   const handleClick = () => {
-    // make INFO XXX -> INFOXXX
-    setRedirectTo(props.course.replace(/\s/g, ""))
+    history.push("/class/" + props.courseID);
   }
 
-  if (redirectTo) {
-    return <Redirect push to={ '/' + redirectTo} />
-  }
+
+  
+  // useEffect(() => {
+  //   axios({
+  //     "method": "POST",
+  //     "url": "https://studybuddy-api.kaylalee.me/register-student/" + props.courseID,
+  //     "headers": {
+  //       "Authorization": props.authToken
+  //     }
+  //   })
+  //   .then((response) => {
+  //     setStudents(response.data);
+  //   })
+  //   .catch((error) => {
+  //     console.log(error)
+  //   })
+  // }, []);
 
   return (
     <div className="col-sm-12 col-md-6 col-xl-4">
@@ -22,8 +39,8 @@ export default function CourseCard(props) {
           <p className="card-text">Department: &nbsp; {props.department} Quarter: &nbsp; {props.quarter}</p>
         </div>
         <div className="registration">
-          <button type="button" class="btn btn-outline-primary">Enroll as Student</button>
-          <button type="button" class="btn btn-outline-primary">Enroll as Expert</button>  
+          <button type="button" className="btn btn-outline-primary" >Enroll as Student</button>
+          <button type="button" className="btn btn-outline-primary">Enroll as Expert</button>  
         </div>
       </div>
     </div> 

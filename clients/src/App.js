@@ -128,7 +128,10 @@ class App extends Component {
                   <CourseForm {...props} authToken={this.state.authToken} />
                 )}
               />
-              <Route exact path="/:courseName" component={ClassPage} />
+              <Route exact path="/class/:classID" render={(props) => (
+                  <ClassPage {...props} authToken={this.state.authToken} />
+                )}
+              />
               <Redirect to="/" />
             </Switch>
           </div>
